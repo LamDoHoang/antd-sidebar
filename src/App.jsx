@@ -1,71 +1,54 @@
-import { useState } from "react";
-import { Button, Drawer, Input, Space } from "antd";
-import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
-import { AnimatePresence, motion } from "motion/react";
-const App = () => {
-  const [open, setOpen] = useState(false);
-  const [openSearch, setOpenSearch] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+import { Col, Layout, Row } from "antd";
+import MenuList from "./components/MenuList";
+import LeftHeader from "./components/LeftHeader";
+import RightHeader from "./components/RightHeader";
 
-  const onSearch = () => {
-    setOpenSearch(!openSearch);
-  };
+const { Header, Sider } = Layout;
+
+const layoutStyle = {
+  overflow: "hidden",
+  width: "100vw",
+  maxWidth: "100vw",
+  height: "100vh",
+};
+
+const siderStyle = {
+  overflow: "scroll",
+  textAlign: "center",
+  lineHeight: "120px",
+  scrollbarWidth: "none" /* Firefox */,
+  msOverflowStyle: "none" /* Internet Explorer 10+ */,
+  "&::-webkit-scrollbar": {
+    /* WebKit */ width: "0",
+    height: "0",
+  },
+};
+
+const headerStyle = {
+  backgroundColor: "#fff",
+  padding: 0,
+};
+
+const App = () => {
   return (
-    <>
-      <Space>
-        <Button type="primary" onClick={showDrawer}>
-          Open
-        </Button>
-      </Space>
-      <Drawer
-        title={
-          <AnimatePresence mode="wait">
-            {!openSearch ? (
-              <motion.div
-                key="modal"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                // exit={{ scale: 0 }}
-              >
-                <text>ATN</text>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="search"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                // exit={{ scale: 0 }}
-              >
-                <Input
-                  addonBefore={<SearchOutlined />}
-                  placeholder="large size"
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        }
-        placement="left"
-        width={500}
-        onClose={onClose}
-        open={open}
-        extra={
-          <Space style={{ marginLeft: 10 }}>
-            <Button type="primary" onClick={onSearch}>
-              {!openSearch ? <SearchOutlined /> : <CloseOutlined />}
-            </Button>
-          </Space>
-        }
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Drawer>
-    </>
+    <Layout style={layoutStyle}>
+      <Header style={headerStyle}>
+        <Row>
+          <Col span={12}>
+            <LeftHeader />
+          </Col>
+          <Col span={12}>
+            <RightHeader />
+          </Col>
+        </Row>
+      </Header>
+
+      <Layout>
+        <Sider theme="light" style={siderStyle} collapsible>
+          <MenuList />
+        </Sider>
+      </Layout>
+    </Layout>
   );
 };
 export default App;
