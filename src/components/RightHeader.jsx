@@ -3,6 +3,7 @@ import {
   Badge,
   Button,
   Drawer,
+  Dropdown,
   Flex,
   Input,
   Space,
@@ -13,12 +14,54 @@ import {
   BellOutlined,
   CloseOutlined,
   HomeOutlined,
+  KeyOutlined,
+  LogoutOutlined,
   MessageOutlined,
   SearchOutlined,
+  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+
+const items = [
+  {
+    key: "1",
+    label: "Đỗ Hoàng Lâm",
+  },
+  {
+    type: "divider",
+  },
+  {
+    key: "2",
+    label: "Trang cá nhân",
+    extra: "⌘P",
+  },
+  {
+    key: "3",
+    label: "Đơn từ",
+    extra: "⌘B",
+  },
+  {
+    key: "4",
+    label: "Cài đặt",
+    icon: <SettingOutlined />,
+    extra: "⌘S",
+  },
+  {
+    type: "divider",
+  },
+  {
+    key: "5",
+    label: "Đổi mật khẩu",
+    icon: <KeyOutlined />,
+  },
+  {
+    key: "6",
+    label: "Đăng xuất",
+    icon: <LogoutOutlined />,
+  },
+];
 const RightHeader = () => {
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -68,10 +111,19 @@ const RightHeader = () => {
             />
           </Badge>
         </Tooltip>
-        <Button
-          shape="circle"
-          icon={<Avatar size="medium" icon={<UserOutlined />} />}
-        />
+        <Dropdown
+          menu={{
+            items,
+          }}
+          trigger={["click"]}
+          arrow
+        >
+          <Button
+            onClick={(e) => e.preventDefault()}
+            shape="circle"
+            icon={<Avatar size="medium" icon={<UserOutlined />} />}
+          />
+        </Dropdown>
       </Space>
       <Drawer
         title={
